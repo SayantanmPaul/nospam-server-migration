@@ -95,6 +95,11 @@ def predict_spam():
             'processed_text': preprocessed_comment  # For debugging
         })
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    print("Health check ping received.")
+    return jsonify({'status': 'ok'}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)
