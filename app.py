@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
-from app.routes.spam import spam_bp 
+from src.routes.spam import spam_bp 
 
 
 def create_app():
