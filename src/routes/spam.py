@@ -79,17 +79,20 @@ load_model_and_vectorizer()
 
 @spam_bp.route('/predict-spam', methods=['POST'])
 def predict_spam():
-    if request.method == 'POST':
-        data = request.get_json()
-        comment = data.get('comment', '')
+    try: 
+        if request.method == 'POST':
+            data = request.get_json()
+            comment = data.get('comment', '')
 
-        preprocessed_comment= preprocessing_text(comment)
+            preprocessed_comment= preprocessing_text(comment)
 
-        # transform using trained vectorizer
-        vect = vectorizer.transform([preprocessed_comment]).toarray()
-        prediction = clf.predict(vect)
-        
-        return jsonify({
-            'prediction': int(prediction[0]),
-            'processed_text': preprocessed_comment  # For debugging
-        })
+            # transform using trained vectorizer
+            vect = vectorizer.transform([preprocessed_comment]).toarray()
+            prediction = clf.predict(vect)
+            
+            return jsonify({
+                'prediction': int(prediction[0]),
+                'processed_text': preprocessed_comment  # For debugging
+            })
+    except Exception as e:
+        return jsonify({"error": str(e)})

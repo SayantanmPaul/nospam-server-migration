@@ -1,13 +1,15 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from src.routes.spam import spam_bp 
-
+from src.routes.sentiment import sentiment_bp
 
 def create_app():
     app = Flask(__name__)
     app.register_blueprint(spam_bp, url_prefix='/api')
+    app.register_blueprint(sentiment_bp, url_prefix='/api')
 
     CORS(app, resources={r"/predict-spam": {"origins": "*", "allow_headers": "*", "methods": ["POST"]}})
+    CORS(app, resources={r"/predict-sentiment": {"origins": "*", "allow_headers": "*", "methods": ["POST"]}})
 
     @app.route('/health', methods=['GET'])
     def health_check():
